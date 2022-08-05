@@ -24,7 +24,7 @@ class usersService{
                 password: faker.internet.password(),
                 addres: faker.address.streetAddress(),
             });
-            console.log(index);
+          
         }
     }
     async create(data) {

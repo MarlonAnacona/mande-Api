@@ -16,9 +16,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "faker": "^5.5.3",
-    "joi": "^17.6.0",
-    "pg": "^8.7.3",
-    "postgres": "^3.2.4"
+    "joi": "^17.6.0"
   },
   "devDependencies": {
     "eslint": "^8.19.0",

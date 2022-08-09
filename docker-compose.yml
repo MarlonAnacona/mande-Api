@@ -15,15 +15,13 @@ services:
     image: postgres
     restart: always
     ports:
-      - 8080:8080
+      - 5432:5432
     environment:
-      - DATABASE_HOST=127.0.0.1
       - POSTGRES_DB=mande_db
       - POSTGRES_USER=marlon
       - POSTGRES_PASSWORD=admin123
     volumes:
       - ./prueba.sql:/docker-entrypoint-initdb.d/prueba.sql
-      - ./postgres_data:/var/lib/postgresql/data
 
   pgadmin:
     image: dpage/pgadmin4

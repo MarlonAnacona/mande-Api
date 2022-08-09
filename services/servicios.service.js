@@ -1,16 +1,18 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
 const pool = require('../libs/postgres');
+
 class servicioService {
   constructor() {
+    console.log('POOL:: ', pool);
     this.servicios = [];
-    this.generate();
+    // this.generate();
     this.pool = pool;
-    this.pool.on('error', (err) => console.error(err));
+    // this.pool.on('error', (err) => console.error(err));
   }
 
   generate() {
-    const limit = 100;
+    const limit = 0;
     for (let index = 0; index < limit; index++) {
       this.servicios.push({
         id: faker.datatype.uuid(),
@@ -32,9 +34,14 @@ class servicioService {
   }
 
   async finde() {
-    const query = 'SELECT * FROM servicio';
-    const rta = await this.pool.query(query);
-    return rta.rows;
+    try {
+      const query = 'SELECT * FROM servicio';
+      const rta = await this.pool.query(query);
+      return rta.rows;
+      // return { nada: 'nada' };
+    } catch (error) {
+      console.log('ERROR::', error);
+    }
   }
 
   async findOne(id) {

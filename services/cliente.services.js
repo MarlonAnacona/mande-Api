@@ -10,7 +10,7 @@ class ClienteService {
   }
 
   generate() {
-    const limit = 100;
+    const limit = 0;
     for (let index = 0; index < limit; index++) {
       this.cliente.push({
         id: faker.datatype.uuid(),

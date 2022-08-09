@@ -10,7 +10,7 @@ class trabajadoresLaboresService {
   }
 
   generate() {
-    const limit = 100;
+    const limit = 0;
     for (let index = 0; index < limit; index++) {
       this.trabajadoresLabores.push({
         id: faker.datatype.uuid(),

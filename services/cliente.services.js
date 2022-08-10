@@ -22,12 +22,20 @@ class ClienteService {
     }
   }
   async create(data) {
-    const newUsers = {
-      id: faker.datatype.uuid(),
-      ...data,
-    };
-    this.cliente.push(newUsers);
-    return newUsers;
+    try {
+      const query =
+        'INSERT INTO cliente(imagen_recibos_publicos,medio_pago,numero_medio_pago,id_usuario) values ($1,$2,$3,$4)';
+      const rta = await this.pool.query(query, [
+        data.image,
+        data.medioPago,
+        data.numeroMedioPago,
+        data.idUsuario,
+      ]);
+      return rta;
+      // return { nada: 'nada' };
+    } catch (error) {
+      console.log('ERROR::', error);
+    }
   }
 
   async finde() {
@@ -37,14 +45,9 @@ class ClienteService {
   }
 
   async findOne(id) {
-    const user = this.cliente.find((item) => item.id === id);
-    if (!user) {
-      throw boom.notFound('product not found');
-    }
-    if (user.isBlock) {
-      throw boom.conflict('product is block');
-    }
-    return user;
+    const query = 'SELECT * FROM cliente WHERE id_cliente=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 
   async update(id, changes) {

@@ -23,12 +23,22 @@ class TrabajadoresService {
     }
   }
   async create(data) {
-    const newUsers = {
-      id: faker.datatype.uuid(),
-      ...data,
-    };
-    this.trabajdores.push(newUsers);
-    return newUsers;
+    try {
+      const query =
+        'INSERT INTO trabajador(imagen_perfil,imagen_doc_identidad,promedio_estrellas,disponible,id_usuario) VALUES($1,$2,$3,$4,$5,$6)';
+
+      const rta = await this.pool.query(query, [
+        data.image,
+        data.imageDocumento,
+        data.CantidadEstrellas,
+        data.disponibilidad,
+        data.direccion,
+        data.idUsuario,
+      ]);
+      return rta;
+    } catch (err) {
+      console.log('ERROR::', err);
+    }
   }
 
   async finde() {
@@ -38,14 +48,9 @@ class TrabajadoresService {
   }
 
   async findOne(id) {
-    const user = this.trabajdores.find((item) => item.id === id);
-    if (!user) {
-      throw boom.notFound('product not found');
-    }
-    if (user.isBlock) {
-      throw boom.conflict('product is block');
-    }
-    return user;
+    const query = 'SELECT * FROM trabajador WHERE id_trabajador=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 
   async update(id, changes) {

@@ -22,12 +22,18 @@ class laborService {
     }
   }
   async create(data) {
-    const newProduct = {
-      id: faker.datatype.uuid(),
-      ...data,
-    };
-    this.labores.push(newProduct);
-    return newProduct;
+    try {
+      const query =
+        'INSERT INTO labor(nombre_labor,precio_unidad_labor) values ($1,$2)';
+      const rta = await this.pool.query(query, [
+        data.nombreLabor,
+        data.precioValor,
+      ]);
+      return rta;
+      // return { nada: 'nada' };
+    } catch (error) {
+      console.log('ERROR::', error);
+    }
   }
 
   async finde() {
@@ -37,14 +43,9 @@ class laborService {
   }
 
   async findOne(id) {
-    const product = this.labores.find((item) => item.id === id);
-    if (!product) {
-      throw boom.notFound('No encontrado');
-    }
-    if (product.isBlock) {
-      throw boom.conflict('product is block');
-    }
-    return product;
+    const query = 'SELECT * FROM labor WHERE id_labor=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 
   async update(id, changes) {

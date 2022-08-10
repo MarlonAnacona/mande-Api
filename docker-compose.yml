@@ -7,12 +7,18 @@ services:
       - postgres
     ports:
       - "8000:8000"
+    environment:
+      - EXTERNAL_PORT=8080
+      - PGDATABASE=mande_db
+      - PGUSER=marlon
+      - PGPASSWORD=admin123
+      - PGHOST=postgres
     volumes:
       - ./:/app/
       - /app/node_modules
 
   postgres:
-    image: postgres
+    image: postgres:14
     restart: always
     ports:
       - 5432:5432
@@ -21,7 +27,7 @@ services:
       - POSTGRES_USER=marlon
       - POSTGRES_PASSWORD=admin123
     volumes:
-      - ./prueba.sql:/docker-entrypoint-initdb.d/prueba.sql
+      - ./1archivos.sql:/docker-entrypoint-initdb.d/1archivos.sql
 
   pgadmin:
     image: dpage/pgadmin4

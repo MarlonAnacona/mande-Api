@@ -12,10 +12,10 @@
 
 const config = {
   env: process.env.NODE_ENV || 'dev',
-  port: process.env.PORT || 3000,
-  dbUser: 'postgres',
+  port: process.env.PORT || 5432,
+  dbUser: 'marlon',
   dbPassword: 'admin123',
-  dbHost: '172.26.0.2',
+  dbHost: '172.18.0.2',
   dbName: 'mande_db',
   dbPort: '5432',
 };

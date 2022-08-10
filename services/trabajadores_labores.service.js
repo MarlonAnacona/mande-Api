@@ -20,12 +20,18 @@ class trabajadoresLaboresService {
     }
   }
   async create(data) {
-    const newUsers = {
-      id: faker.datatype.uuid(),
-      ...data,
-    };
-    this.trabajadoresLabores.push(newUsers);
-    return newUsers;
+    try {
+      const query =
+        'INSERT INTO labortrabajador(id_labor_trabajador,id_trabajador,id_labor) VALUES($1,$2,$3)';
+
+      const rta = await this.pool.query(query, [
+        data.idTrabajador,
+        data.idLabor,
+      ]);
+      return rta;
+    } catch (err) {
+      console.log('ERROR::', err);
+    }
   }
 
   async finde() {
@@ -35,14 +41,10 @@ class trabajadoresLaboresService {
   }
 
   async findOne(id) {
-    const user = this.trabajadoresLabores.find((item) => item.id === id);
-    if (!user) {
-      throw boom.notFound('product not found');
-    }
-    if (user.isBlock) {
-      throw boom.conflict('product is block');
-    }
-    return user;
+    const query =
+      'SELECT * FROM labortrabajador WHERE id_labor_trabajador= ' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 
   async update(id, changes) {

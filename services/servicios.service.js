@@ -4,11 +4,11 @@ const pool = require('../libs/postgres');
 
 class servicioService {
   constructor() {
-    console.log('POOL:: ', pool);
+    //console.log('POOL:: ', pool);
     this.servicios = [];
     // this.generate();
     this.pool = pool;
-    // this.pool.on('error', (err) => console.error(err));
+    this.pool.on('error', (err) => console.error(err));
   }
 
   generate() {
@@ -25,12 +25,29 @@ class servicioService {
     }
   }
   async create(data) {
-    const newProduct = {
+    /*const newProduct = {
       id: faker.datatype.uuid(),
       ...data,
     };
-    this.servicios.push(newProduct);
-    return newProduct;
+    this.servicios.push(newProduct);*/
+    try {
+      const query =
+        'INSERT INTO servicio(id_usuario,id_trabajador,id_labor,fecha_servicio,observacion_servicio,valor_servicio,estado_servicio,calificacion_servicio) values ($1,$2,$3,$4,$5,$6,$7,$8)';
+      const rta = await this.pool.query(query, [
+        data.idusuario,
+        data.idtrabajador,
+        data.idLabor,
+        data.fechaServicio,
+        data.observacion,
+        data.valor_Servicio,
+        data.estado_service,
+        data.califica,
+      ]);
+      return rta;
+      // return { nada: 'nada' };
+    } catch (error) {
+      console.log('ERROR::', error);
+    }
   }
 
   async finde() {
@@ -45,14 +62,9 @@ class servicioService {
   }
 
   async findOne(id) {
-    const product = this.servicios.find((item) => item.id === id);
-    if (!product) {
-      throw boom.notFound('product not found');
-    }
-    if (product.isBlock) {
-      throw boom.conflict('product is block');
-    }
-    return product;
+    const query = 'SELECT * FROM servicio WHERE id_servicio=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 
   async update(id, changes) {

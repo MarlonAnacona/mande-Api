@@ -26,10 +26,25 @@ class usersService {
     }
   }
   async create(data) {
-    const query =
-      'INSERT INTO usuarios(tipo_documento,numero_documento,nombre,apellido,email,telefono,genero,password,direccion) values (?,?,?,?,?,?,?,?,?)';
-    const rta = await this.pool.query(query);
-    return rta;
+    try {
+      const query =
+        'INSERT INTO usuario(tipo_documento,numero_documento,nombre,apellido,email,telefono,genero,password,direccion) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)';
+
+      const rta = await this.pool.query(query, [
+        data.tipoDocumento,
+        data.numeroDocumento,
+        data.nombre,
+        data.apellido,
+        data.email,
+        data.telefono,
+        data.genero,
+        data.password,
+        data.direccion,
+      ]);
+      return rta;
+    } catch (err) {
+      console.log('ERROR::', err);
+    }
   }
 
   async finde() {
@@ -39,14 +54,9 @@ class usersService {
   }
 
   async findOne(id) {
-    const user = this.users.find((item) => item.id === id);
-    if (!user) {
-      throw boom.notFound('product not found');
-    }
-    if (user.isBlock) {
-      throw boom.conflict('product is block');
-    }
-    return user;
+    const query = 'SELECT * FROM usuario WHERE id_usuario=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 
   async update(id, changes) {

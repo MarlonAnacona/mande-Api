@@ -21,12 +21,21 @@ class productService {
     }
   }
   async create(data) {
-    const newProduct = {
-      id: faker.datatype.uuid(),
-      ...data,
-    };
-    this.products.push(newProduct);
-    return newProduct;
+    try {
+      const query =
+        'INSERT INTO pago(id_servicio,fecha_pago,valor_pago,numero_medio_pago,pago_realizado) values ($1,$2,$3,$4,$5)';
+      const rta = await this.pool.query(query, [
+        data.idService,
+        data.fechaPago,
+        data.valorPago,
+        data.numeroPago,
+        data.pagoRealizado,
+      ]);
+      return rta;
+      // return { nada: 'nada' };
+    } catch (error) {
+      console.log('ERROR::', error);
+    }
   }
 
   async finde() {
@@ -36,14 +45,9 @@ class productService {
   }
 
   async findOne(id) {
-    const product = this.products.find((item) => item.id === id);
-    if (!product) {
-      throw boom.notFound('product not found');
-    }
-    if (product.isBlock) {
-      throw boom.conflict('product is block');
-    }
-    return product;
+    const query = 'SELECT * FROM pago WHERE id_pago=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 
   async update(id, changes) {

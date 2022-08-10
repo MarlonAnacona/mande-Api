@@ -1,7 +1,7 @@
 -- Database: mande_db
 
 -- DROP DATABASE mande_db;
-/*
+
 CREATE DATABASE mande_db
     WITH
     OWNER = postgres
@@ -13,7 +13,7 @@ CREATE DATABASE mande_db
     TEMPLATE template0;
 
 \c mande_db
-*/
+
 
 CREATE TABLE usuario(
 	id_usuario SERIAL PRIMARY KEY,

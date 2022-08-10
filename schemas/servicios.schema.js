@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
 const id = Joi.string().uuid();
 
@@ -10,25 +10,28 @@ const estado_service = Joi.boolean();
 const califica = Joi.number().integer();
 
 const createServiciosSchema = Joi.object({
-    fecha: fecha.required(),
-    valor_Servicio: valor_Servicio.required(),
-    observacion: observacion.required(),
-    estado_service: estado_service.required(),
-    califica: califica.required()
+  fecha: fecha.required(),
+  valor_Servicio: valor_Servicio.required(),
+  observacion: observacion.required(),
+  estado_service: estado_service.required(),
+  califica: califica.required(),
 });
 
 const updateServiciosSchema = Joi.object({
-    nameservice: nameservice,
-    fecha: fecha,
-    valor_Servicio: valor_Servicio,
-    observacion: observacion,
-    estado_service: estado_service,
-    califica: califica
-
-})
+  nameservice: nameservice,
+  fecha: fecha,
+  valor_Servicio: valor_Servicio,
+  observacion: observacion,
+  estado_service: estado_service,
+  califica: califica,
+});
 
 const getServiciosSchema = Joi.object({
-    id: id.required(),
-})
+  id: id.required(),
+});
 
-module.exports = { createServiciosSchema, updateServiciosSchema, getServiciosSchema }
+module.exports = {
+  createServiciosSchema,
+  updateServiciosSchema,
+  getServiciosSchema,
+};

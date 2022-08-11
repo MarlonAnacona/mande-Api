@@ -41,11 +41,13 @@ class ClienteService {
   async finde() {
     const query = 'SELECT * FROM cliente';
     const rta = await this.pool.query(query);
+    console.log(rta);
     return rta.rows;
   }
 
   async findOne(id) {
     const query = 'SELECT * FROM cliente WHERE id_cliente=' + id + '';
+    console.log(id);
     const rta = await this.pool.query(query);
     return rta.rows;
   }
@@ -65,13 +67,9 @@ class ClienteService {
   }
 
   async delete(id) {
-    const index = this.cliente.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('product not found');
-    } else {
-      this.cliente.splice(index, 1);
-      return { id };
-    }
+    const query = 'DELETE FROM cliente WHERE id_cliente=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 }
 module.exports = ClienteService;

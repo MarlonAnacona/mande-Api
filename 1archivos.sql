@@ -18,14 +18,15 @@ CREATE DATABASE mande_db
 CREATE TABLE usuario(
 	id_usuario SERIAL PRIMARY KEY,
 	tipo_documento VARCHAR(60) NOT NULL,
-  numero_Documento INTEGER NOT NULL,
+  numero_Documento INTEGER NOT NULL UNIQUE,
   nombre VARCHAR(60) NOT NULL,
   apellido VARCHAR(60) NOT NULL,
   email VARCHAR(60) NOT NULL,
   telefono INTEGER NOT NULL,
   genero CHAR(1) CHECK (genero IN('M','F')),
 	password VARCHAR(60) CHECK (length(password) > 3),
-	direccion VARCHAR(60) NOT NULL
+	direccion VARCHAR(60) NOT NULL,
+  tipousuario INTEGER NOT NULL
 );
 
 \c mande_db

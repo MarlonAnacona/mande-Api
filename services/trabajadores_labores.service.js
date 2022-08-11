@@ -62,13 +62,10 @@ class trabajadoresLaboresService {
   }
 
   async delete(id) {
-    const index = this.trabajadoresLabores.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('product not found');
-    } else {
-      this.trabajadoresLabores.splice(index, 1);
-      return { id };
-    }
+    const query =
+      'DELETE FROM labortrabajador WHERE id_labor_trabajador=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 }
 module.exports = trabajadoresLaboresService;

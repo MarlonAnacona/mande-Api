@@ -82,13 +82,9 @@ class servicioService {
   }
 
   async delete(id) {
-    const index = this.servicios.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('product not found');
-    } else {
-      this.servicios.splice(index, 1);
-      return { id };
-    }
+    const query = 'DELETE FROM servicio WHERE id_servicio=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 }
 module.exports = servicioService;

@@ -50,6 +50,7 @@ class TrabajadoresService {
   async findOne(id) {
     const query = 'SELECT * FROM trabajador WHERE id_trabajador=' + id + '';
     const rta = await this.pool.query(query);
+    console.rta.idUsuario;
     return rta.rows;
   }
 
@@ -68,13 +69,9 @@ class TrabajadoresService {
   }
 
   async delete(id) {
-    const index = this.trabajdores.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('product not found');
-    } else {
-      this.trabajdores.splice(index, 1);
-      return { id };
-    }
+    const query = 'DELETE FROM trabajador WHERE id_trabajador=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 }
 module.exports = TrabajadoresService;

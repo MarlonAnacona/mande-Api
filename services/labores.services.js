@@ -63,13 +63,9 @@ class laborService {
   }
 
   async delete(id) {
-    const index = this.labores.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('No encontrado');
-    } else {
-      this.labores.splice(index, 1);
-      return { id };
-    }
+    const query = 'DELETE FROM labor WHERE id_labor=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 }
 module.exports = laborService;

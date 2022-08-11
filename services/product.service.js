@@ -65,13 +65,9 @@ class productService {
   }
 
   async delete(id) {
-    const index = this.products.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('product not found');
-    } else {
-      this.products.splice(index, 1);
-      return { id };
-    }
+    const query = 'DELETE FROM pago WHERE id_pago=' + id + '';
+    const rta = await this.pool.query(query);
+    return rta.rows;
   }
 }
 module.exports = productService;

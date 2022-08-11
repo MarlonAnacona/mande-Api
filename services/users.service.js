@@ -50,17 +50,21 @@ class usersService {
           data.numeroDocumento +
           '';
         const rta3 = await this.pool.query(query3);
-
         const query1 =
           'INSERT INTO cliente(imagen_recibos_publicos,medio_pago,numero_medio_pago,id_usuario) values (null,' +
           rta3.rows[0].id_usuario +
           ',null,null)';
         const rta1 = await this.pool.query(query1);
       } else {
+        const query3 =
+          'SELECT id_usuario FROM usuario WHERE numero_documento=' +
+          data.numeroDocumento +
+          '';
+        const rta3 = await this.pool.query(query3);
         const query2 =
-          'INSERT INTO trabajador(imagen_perfil,imagen_doc_identidad,promedio_estrellas,disponible,id_usuario) VALUES(null,' +
+          'INSERT INTO trabajador(imagen_perfil,imagen_doc_identidad,promedio_estrellas,disponible,id_usuario) VALUES(null,null,null,null,' +
           rta3.rows[0].id_usuario +
-          ',null,null,null,null)';
+          ')';
         const rta2 = await this.pool.query(query2);
       }
 

@@ -27,12 +27,11 @@ const createUserSchema = Joi.object({
 
 const updateUserSchema = Joi.object({
   nombre: nombre.required(),
-  genero: genero.required(),
-  telefono: telefono.required,
+  apellido: apellido.required(),
   email: email.required(),
+  telefono: telefono.required(),
   password: password.required(),
   direccion: direccion.required(),
-  tipousuario: tipousuario.required(),
 });
 
 const getUserSchema = Joi.object({

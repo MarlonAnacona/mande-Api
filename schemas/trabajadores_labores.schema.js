@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const id = Joi.string().uuid();
+const id = Joi.number().integer();
 const idUsuario = Joi.string().uuid();
 const idTrabajador = Joi.string().uuid();
 

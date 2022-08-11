@@ -2,6 +2,8 @@ const faker = require('faker');
 const boom = require('@hapi/boom');
 const pool = require('../libs/postgres');
 const serviceCliente = require('./cliente.services');
+const { encrypt, compare } = require('../middlware/encryptaPassword');
+
 class usersService {
   constructor() {
     this.users = [];
@@ -26,8 +28,12 @@ class usersService {
       });
     }
   }
+
   async create(data) {
     try {
+      const password1 = await encrypt(data.password);
+
+      console.log(password1);
       const query =
         'INSERT INTO usuario(tipo_documento,numero_documento,nombre,apellido,email,telefono,genero,password,direccion,tipousuario) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
 
@@ -39,7 +45,7 @@ class usersService {
         data.email,
         data.telefono,
         data.genero,
-        data.password,
+        password1,
         data.direccion,
         data.tipousuario,
       ]);
@@ -88,16 +94,24 @@ class usersService {
   }
 
   async update(id, changes) {
-    const index = this.users.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('No encontrado');
-    } else {
-      const user = this.users[index];
-      this.users[index] = {
-        ...user,
-        changes,
-      };
-      return this.users[index];
+    try {
+      console.log(changes);
+      const query =
+        'UPDATE usuario SET nombre=$1,apellido=$2,email=$3,telefono=$4,password=$5,direccion=$6 WHERE id_usuario= ' +
+        id +
+        '';
+
+      const rta = await this.pool.query(query, [
+        changes.nombre,
+        changes.apellido,
+        changes.email,
+        changes.telefono,
+        changes.password,
+        changes.direccion,
+      ]);
+      return rta;
+    } catch (error) {
+      console.log('ERROR::', error);
     }
   }
 

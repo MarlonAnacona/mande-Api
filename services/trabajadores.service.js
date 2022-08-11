@@ -50,21 +50,27 @@ class TrabajadoresService {
   async findOne(id) {
     const query = 'SELECT * FROM trabajador WHERE id_trabajador=' + id + '';
     const rta = await this.pool.query(query);
-    console.rta.idUsuario;
+
     return rta.rows;
   }
 
   async update(id, changes) {
-    const index = this.trabajdores.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw boom.notFound('No encontrado');
-    } else {
-      const user = this.trabajdores[index];
-      this.trabajdores[index] = {
-        ...user,
-        changes,
-      };
-      return this.trabajdores[index];
+    try {
+      console.log(changes);
+      const query =
+        'UPDATE trabajadores SET imagen_perfil=$1,imagen_doc_identidad=$2,promedio_estrellas=$3,disponible=$4 WHERE id_usuario= ' +
+        id +
+        '';
+
+      const rta = await this.pool.query(query, [
+        changes.image,
+        changes.imageDocumento,
+        changes.CantidadEstrellas,
+        changes.disponibilidad,
+      ]);
+      return rta;
+    } catch (error) {
+      console.log('ERROR::', error);
     }
   }
 

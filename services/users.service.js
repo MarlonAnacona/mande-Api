@@ -99,9 +99,9 @@ class usersService {
 
   async update(id, changes) {
     try {
-      console.log(changes);
+      const password = await encrypt(changes.password);
       const query =
-        'UPDATE usuario SET nombre=$1,apellido=$2,email=$3,telefono=$4,password=$5,direccion=$6 WHERE id_usuario= ' +
+        'UPDATE usuario SET nombre=$1,apellido=$2,email=$3,telefono=$4,password=$5 WHERE id_usuario= ' +
         id +
         '';
 
@@ -110,8 +110,7 @@ class usersService {
         changes.apellido,
         changes.email,
         changes.telefono,
-        changes.password,
-        changes.direccion,
+        password,
       ]);
       return rta;
     } catch (error) {

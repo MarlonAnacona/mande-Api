@@ -54,6 +54,8 @@ class TrabajadoresService {
     return rta.rows;
   }
 
+  
+
   async update(id, changes) {
     try {
       console.log(changes);

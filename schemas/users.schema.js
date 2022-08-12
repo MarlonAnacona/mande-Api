@@ -31,7 +31,6 @@ const updateUserSchema = Joi.object({
   email: email.required(),
   telefono: telefono.required(),
   password: password.required(),
-  direccion: direccion.required(),
 });
 
 const getUserSchema = Joi.object({

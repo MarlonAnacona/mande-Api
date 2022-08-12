@@ -48,9 +48,7 @@ router.post(
         res.status(404);
         res.send({ error: 'User not found' });
       }
-      console.log(body.password);
 
-      console.log(user.rows[0].password);
       const checkPassword = await compare(body.password, user.rows[0].password);
 
       if (checkPassword) {
@@ -94,6 +92,7 @@ router.patch(
       const { id } = req.params;
       const body = req.body;
       const user = await service.update(id, body);
+
       res.json(user);
     } catch (error) {
       next(error);

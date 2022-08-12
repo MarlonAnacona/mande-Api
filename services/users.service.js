@@ -32,8 +32,6 @@ class usersService {
   async create(data) {
     try {
       const password1 = await encrypt(data.password);
-
-      console.log(password1);
       const query =
         'INSERT INTO usuario(tipo_documento,numero_documento,nombre,apellido,email,telefono,genero,password,direccion,tipousuario) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
 

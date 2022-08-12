@@ -6,7 +6,7 @@ const encrypt = async (textPplain) => {
 };
 
 const compare = async (passwordPlain, hashPassword) => {
-  return await bcrypt.compare(passwordPlain, hashPasswordash);
+  return await bcrypt.compare(passwordPlain, hashPassword);
 };
 
 module.exports = { encrypt, compare };

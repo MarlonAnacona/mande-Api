@@ -85,10 +85,16 @@ class usersService {
   }
 
   async findOne(id) {
-    const query = 'SELECT * FROM usuario WHERE id_usuario=' + id + '';
-    const rta = await this.pool.query(query);
+    const query = 'SELECT * FROM usuario WHERE id_usuario=$1 ';
+    const rta = await this.pool.query(query, [id]);
 
-    return rta.rows;
+    return rta;
+  }
+  async findOne1(email) {
+    const query = 'SELECT * FROM usuario WHERE email=$1 ';
+    const rta = await this.pool.query(query, [email]);
+
+    return rta;
   }
 
   async update(id, changes) {

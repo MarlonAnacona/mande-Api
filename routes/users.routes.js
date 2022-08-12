@@ -1,13 +1,15 @@
 const express = require('express');
 const usersService = require('./../services/users.service');
-
 const router = express.Router();
 const service = new usersService();
 const errorHandlerValidator = require('./../middlware/validator');
+const { encrypt, compare } = require('./../middlware/encryptaPassword');
+
 const {
   createUserSchema,
   updateUserSchema,
   getUserSchema,
+  getloginSchema,
 } = require('./../schemas/users.schema');
 
 router.get('/', async (req, res, next) => {
@@ -34,7 +36,43 @@ router.get(
 );
 
 router.post(
-  '/',
+  '/login',
+  errorHandlerValidator(getloginSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+
+      const user = await service.findOne1(body.email);
+
+      if (!user) {
+        res.status(404);
+        res.send({ error: 'User not found' });
+      }
+      console.log(body.password);
+
+      console.log(user.rows[0].password);
+      const checkPassword = await compare(body.password, user.rows[0].password);
+
+      if (checkPassword) {
+        //TODO Contraseña es correct
+        res.send(user.rows);
+        return;
+      }
+      if (!checkPassword) {
+        res.status(409);
+        res.send({
+          error: 'Invalid password',
+        });
+        return;
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+router.post(
+  '/register',
   errorHandlerValidator(createUserSchema, 'body'),
   async (req, res, next) => {
     try {

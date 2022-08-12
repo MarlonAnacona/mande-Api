@@ -11,3 +11,5 @@ Crear la imagen de docker con el esquema y los datos pre-guardados
 docker build -t ${USER_NAME}/mandeapi .
 Poner a correr el servidor de bases de datos
  docker run -it -p 3000:3000 ${USER_NAME}/mandeapi
+
+https://youtu.be/3t8F1QqDz6g
